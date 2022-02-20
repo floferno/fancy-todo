@@ -1,6 +1,5 @@
 const { Todo } = require('../models/')
 
-
 class TodoController {
     // static getTodos(req, res) {
     //     Todo.findAll()
@@ -12,17 +11,20 @@ class TodoController {
     //     })
     // }
 
-    static async getTodos(req, res) {
+    static async getTodos(req, res, next) {
         try {
-            const data = await Todo.findAll()
+            const data = await Todo.findAll({
+                where: {
+                    UserId: req.decoded.id
+                }
+            })
             if(!data) {
 				throw { msg: "No todo added yet"}
 			} else { 
 				res.status(200).json(data)
 			}
 		} catch(err) {
-            const error = err.msg || 'Internal server error'
-			res.status(500).json({ error })
+            next(err)
 		}
     }
 
@@ -39,13 +41,18 @@ class TodoController {
     //     })
     // }
 
-    static async addTodo(req, res) {
+    static async addTodo(req, res, next) {
         try {
             const { title, description, status, due_date } = req.body
-            const data = await Todo.create({ title, description, status, due_date })
-            if(data) res.status(201).json(data)
+            const data = await Todo.create({ title, description, status, due_date, UserId: req.decoded.id })
+            if(data) res.status(201).json({ 
+                title: data.title,
+                description: data.description, 
+                status: data.status,
+                due_date: data.due_date
+             })
 		} catch(err) {
-			res.status(500).json(err)
+            next(err)
 		}
     }
 
@@ -65,7 +72,7 @@ class TodoController {
     // }
 
 
-    static async getTodoById(req, res) {
+    static async getTodoById(req, res, next) {
 		try {
 			const data = await Todo.findOne({
             where: {
@@ -78,8 +85,7 @@ class TodoController {
 				res.status(200).json(data)
 			}
 		} catch(err) {
-            const error = err.msg || 'Internal server error'
-			res.status(500).json({ error })
+            next(err)
 		}
     }
 
@@ -101,7 +107,7 @@ class TodoController {
     //     })
     // }
 
-	static async updateTodo(req, res) {
+	static async updateTodo(req, res, next) {
 		try {
 			const { title, description, status, due_date } = req.body
 			const data = await Todo.update({ title, description, status, due_date }, {
@@ -116,8 +122,7 @@ class TodoController {
 				res.status(200).json(data[1][0])
 			}
 		} catch(err) {
-            const error = err.msg || 'Internal server error'
-			res.status(500).json({ error })
+            next(err)
 		}
 	}
 
@@ -137,7 +142,7 @@ class TodoController {
     //     })
     // }
 
-	static async updateStatus(req, res) {
+	static async updateStatus(req, res, next) {
         try {
 			const { status } = req.body
 			const data =  await Todo.update({ status }, {
@@ -152,8 +157,7 @@ class TodoController {
 					res.status(200).json(data[1][0])
 				}
 		} catch(err) {
-            const error = err.msg || 'Internal server error'
-			res.status(500).json({ error })
+            next(err)            
 		}
     }
 
@@ -172,7 +176,7 @@ class TodoController {
     //     })
     // }
 
-	static async deleteTodo(req, res) {
+	static async deleteTodo(req, res, next) {
 		try {
 			const data = await Todo.destroy({
 				where: {
@@ -180,13 +184,12 @@ class TodoController {
 				}
 			})
 			if(!data) {
-				throw { msg: "Data not found"}
+				throw { msg: "Data not found" }
 			} else { 
 				res.status(200).json({ msg: "Todo successfully deleted"})
 			}
 		} catch(err) {
-            const error = err.msg || 'Internal server error'
-			res.status(500).json({ error })
+            next(err)
 		}
 	}
 

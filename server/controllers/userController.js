@@ -19,19 +19,19 @@ const { generateToken } = require('../helpers/jwt')
 
 
 class UserController {
-  static register(req, res) {
-      const { email, password } = req.body
-      User.create({ email, password })
-      .then(user => {
-        res.status(201).json({
-          msg: "Registration successful",
-          id: user.id,
-          email: user.email
+  static register(req, res, next) {
+    console.log("masuk")
+    const { email, password } = req.body
+    User.create({ email, password })
+    .then(user => {
+      res.status(201).json({
+        msg: "Registration successful",
+        id: user.id,
+        email: user.email
         })
       })
       .catch(err => {
-        const error = err.errors[0].message || 'Internal Server Error'
-        res.status(500).json({ error })
+        next(err)
       })
     }
       
@@ -58,7 +58,7 @@ class UserController {
   //   }
   // }
 
-    static login(req,res) {
+    static login(req,res, next) {
       const { email, password } = req.body
       User.findOne({
         where: {
@@ -76,9 +76,7 @@ class UserController {
         res.status(200).json({ access_token })
       })
       .catch(err => {
-        console.log('masuk error')
-        const error = err.msg || 'Internal server error'
-        res.status(500).json({ error })
+        next(err)
       })
     }
 
