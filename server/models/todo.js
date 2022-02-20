@@ -19,8 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     title: {
       type: DataTypes.STRING,
       validate: {
-        notEmpty: { // validasi field gak boleh kosong
-          // kalo empty (true) maka message-nya: title is required gitu
+        notEmpty: {
           args: true,
           msg: 'Title is required'
         }
@@ -56,6 +55,9 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Due date must be in dd-mm-yyyy format' //dapet message ini
         }
       }
+    },
+     UserId: {
+      type: DataTypes.INTEGER,
     }
   }, {
     sequelize,
