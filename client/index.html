@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+  
+  
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" /> -->
+  <!-- <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" /> -->
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+
+  <!-- <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet"> -->
+  <!-- <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> -->
+  
+  <!-- Style -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <title>Fancy Todo</title>
+</head>
+<body>
+
+  <div class="container mb-2 mt-2">
+
+    <!-- NAVBAR --> 
+      <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"><i class="bi bi-journal-text"></i> Fancy Todo</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item" id="nav-add">
+                <a class="nav-link" href="#"><i class="btn btn bi bi-plus-circle"></i>Add Todo</a>
+              </li>
+            </ul>
+            <ul id="navbar-user" class="nav ml-auto justify-content-end navbar-text mr-3">
+              <i class="bi bi-person-circle"></i> Welcome! 
+            </ul>
+            <a class="nav-item nav-link" href="#" id="nav-logout" onclick="logout()"><i class="bi bi-arrow-right-circle"></i> Log Out</a>
+          </div>
+        </div>
+      </nav>
+    <!-- END OF NAVBAR -->
+
+
+
+  <!-- START OF LOGIN PAGE -->
+
+  <div class="content" id="login-page">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <img src="./assets/for-login-form.png" alt="Image" class="img-fluid">
+        </div>
+        <div class="col-md-6 contents">
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <div class="mb-4">
+                <h1 class="mx-auto">Login</h1>
+              </div>
+              
+              <form id="login-form">
+                <div class="mb-3">
+                  <label for="email" class="form-label h4">Email</label>
+                  <input type="email" class="form-control" id="login-email" placeholder="Email" aria-describedby="emailHelp" required>
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label h4">Password</label>
+                  <input type="password" class="form-control" placeholder="Password" id="login-password" required>
+                </div>
+  
+                <input type="submit" value="Log In" class="btn btn-block btn-primary" id="login-button">
+                <div class="mt-2">
+                  <a href="#" style="text-decoration:none" id="register-link">I don't have any account</a>
+                </div>
+  
+                <span class="d-block text-left my-4 text-muted">&mdash; or login with &mdash;</span>
+  
+                <div class="social-login">
+                  <a href="#" class="google">
+                    <span class="icon-google mr-3"></span>
+                  </a>
+                </div>
+              </form>
+            </div>
+          </div>
+  
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+<!-- END OF LOG IN PAGE -->
+
+<!-- START OF REGISTER PAGE -->
+
+<div class="content" id="register-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <img src="./assets/for-register-form.png" alt="Image" class="img-fluid">
+      </div>
+      <div class="col-md-6 contents">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="mb-4">
+              <h1 class="mx-auto">Registration</h1>
+            </div>
+
+            <form id="register-form">
+              <div class="mb-3">
+                <label for="full-name" class="form-label h4">Full Name</label>
+                <input type="full-name" class="form-control" id="register-full-name" placeholder="Full Name"
+                  aria-describedby="full-name" required>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label h4">Email</label>
+                <input type="email" class="form-control" id="register-email" placeholder="Email" aria-describedby="emailHelp" required>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label h4">Password</label>
+                <input type="password" class="form-control" placeholder="Password" id="register-password" required>
+              </div>
+
+              <input type="submit" value="Register" class="btn btn-block btn-primary" id="register-button">
+              <div class="mt-2">
+                <a href="#" style="text-decoration:none" id="login-link">I already have an account</a>
+              </div>
+
+              <span class="d-block text-left my-4 text-muted">&mdash; or register with &mdash;</span>
+
+              <div class="social-login">
+                <a href="#" class="google">
+                  <span class="icon-google mr-3"></span>
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- END OF REGISTER PAGE -->
+
+<!-- START OF HOMEPAGE -->
+  <!-- START OF ADD TODO PAGE -->
+        <section id="add-todo-page" class="mb-3 mt-3">
+          <div class="row col-6 shadow sm-3 mb-2 bg-white rounded d-flex justify-content-center" style="margin: auto; padding:1rem;"> 
+      
+            <div class="col-sm">
+              <form id="add-todo-form">
+                <h3 class="text-white mt-2 shadow p-3 mb-3 bg-info rounded"><i class="bi bi-plus-circle"></i> Add Todo</h3>
+                <!-- <h3 class="mx-auto">Add Todo</h3> -->
+                <div class="mb-3 mt-3">
+                  <label for="title" class="form-label">Title</label>
+                  <input type="text" class="form-control" id="add-title" placeholder="Title" required>
+                </div>
+                <div class="mb-3">
+                  <label for="description" class="form-label">Description</label>
+                  <textarea class="form-control" id="add-description" rows="3" placeholder="Description" required></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="due-date" class="form-label">Due Date</label>
+                  <input type="date" class="form-control" id="add-due-date" required>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary bg-primary" id="add-todo-button">Add</button>
+                  <a href="#" class="btn btn-danger bt-5" id="cancel-button">Cancel</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+  <!-- END OF ADD TODO PAGE -->
+
+
+  <!-- START OF EDIT TODO PAGE --> 
+        <section id="edit-todo-page" class="mb-3 mt-3">
+          <div class="row col-6 shadow sm-3 mb-2 bg-white rounded d-flex justify-content-center"
+            style="margin: auto; padding:1rem;">
+        
+            <div class="col-sm">
+              <form id="edit-todo-form">
+                <h3 class="text-white text-center mt-2 shadow p-3 mb-3 bg-info rounded"><i class="bi bi-plus-circle"></i> Edit Todo</h3>
+                <!-- <h3 class="mx-auto">Add Todo</h3> -->
+                <div class="mb-3 mt-3">
+                  <label for="title" class="form-label">Title</label>
+                  <input type="text" class="form-control" id="edit-title" placeholder="Title" required>
+                </div>
+                <div class="mb-3">
+                  <label for="description" class="form-label">Description</label>
+                  <textarea class="form-control" id="edit-description" rows="3" placeholder="Description" required></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="due-date" class="form-label">Due Date</label>
+                  <input type="date" class="form-control" id="edit-due-date" required>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary bg-primary" id="edit-todo-button">Save Changes</button>
+                  <a href="#" class="btn btn-danger bt-5" id="cancel-button">Cancel</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+  <!-- END OF EDIT TODO PAGE
+
+
+
+  <!- START OF HOMEPAGE -->
+        <section id="home-page" class="mb-3 mt-3" >
+        
+        
+          <!-- WIDGETS -->
+          <div class="row shadow sm-2 bg-white rounded p-3">
+
+            <div class="col-4">
+              <div class="mt-2 text-center shadow p-3 mb-3 bg-info rounded">
+                <h3 class="text-white mb-1 pt-1 bg-info rounded"><i class="bi bi-dice-3"></i> Widgets</h3>
+              </div>
+
+              <!-- START OF RANDOM INSPO -->
+              <div class="card card-bored shadow p-2 mb-5 bg-white rounded">
+                <div class="card-body text-center">
+                  <h5 class="card-title">Bored with your daily routine?</h5>
+                  <p class="card-text">Worry not!</p>
+                  <p>We got a lot of fun ideas to add some spices into your todo list.</p>
+                  <button id="btn-bored-api" class="btn btn-outline-primary btn-sm">Click Here</button><br>
+                  <p id="bored-data" class="mt-3"></p>
+                </div>
+              </div>
+        
+              <!-- END OF FUN INSPO -->
+        
+              
+              <!-- START OF QUOTE -->
+              <div class="row">
+                <div id="quote" class="col-12 text-center mt-3 mb-3">
+                  <h5>Nyonya Meneer once said </h5>
+                  <h2 id="quote-desc">Hadeuh, mlekmink!</h2>
+                </div>
+              </div>
+              <!-- END OF QUOTE -->
+        
+            </div>
+        
+            <!-- END OF WIDGETS -->
+        
+            <!-- START OF TODO LIST -->
+        
+            <div class="col-8 text-center" id="todo-list">
+              <div class="mt-2 text-center shadow p-3 mb-1 bg-info rounded">
+                <h3 class="text-white pt-1 mb-1 bg-info rounded"><i class="bi bi-list-check"></i> Todo List</h3>
+              </div>
+                      <div class="row" id="card-content">
+                      </div>
+            </div>
+
+         <!-- END OF TODO LIST -->
+        </section>
+
+
+  <!-- END OF HOMEPAGE -->
+
+</div>
+<!-- END OF ALL -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+<script src="./script/script.js"></script>
+
+
+
+</body>
+</html>

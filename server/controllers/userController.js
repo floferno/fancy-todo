@@ -20,13 +20,13 @@ const { generateToken } = require('../helpers/jwt')
 
 class UserController {
   static register(req, res, next) {
-    console.log("masuk")
-    const { email, password } = req.body
-    User.create({ email, password })
+    const { email, password, full_name} = req.body
+    User.create({ email, password, full_name })
     .then(user => {
       res.status(201).json({
         msg: "Registration successful",
         id: user.id,
+        full_name: user.full_name,
         email: user.email
         })
       })
