@@ -512,7 +512,7 @@ Response:
 
 
 
-# 7. DELETE /todos/:id
+# 8. DELETE /todos/:id
 
 - **To delete a specific todo**
 
@@ -576,3 +576,57 @@ Response:
 
 
 
+# 8. GET /randomfunactivities
+- **To show random fun activities**
+
+## URL
+
+```jsx
+/randomfunactivities
+```
+
+## Method
+
+```jsx
+GET
+```
+
+## URL Params
+
+```jsx
+None
+```
+
+## Request Headers
+
+```jsx
+None
+```
+
+## Request Body
+
+```jsx
+None
+```
+
+## Success Response
+
+```jsx
+Code: 200
+Response:
+{
+    "activity": "Take your dog on a walk",
+    "type": "relaxation",
+    "participants": 1
+}
+```
+
+## Error Response
+
+```jsx
+Code: 500
+Response:
+{
+    "error": "Internal server error"
+}
+```
