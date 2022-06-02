@@ -11,16 +11,19 @@ class APIController {
         }
         };
 
-        axios.request(options).then(function (response) {
+        axios.request(options)
+        .then(response => {
             res.status(200).json({ 
                 setupJoke: response.data.body[0].setup,
                 punchline: response.data.body[0].punchline
             })
-            console.log(response.data.body[0].setup);
-            console.log(response.data.body[0].punchline);
-        }).catch(function (error) {
-            console.error(error);
-        });
+            // console.log(response.data.body[0].setup);
+            // console.log(response.data.body[0].punchline);
+        })
+        .catch((err) => {
+            console.log("ini error dr server api", err.response.data.message);
+            next({error: err.response.data.message})
+        })
     }
 
 }
