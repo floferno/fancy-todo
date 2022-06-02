@@ -1,25 +1,26 @@
 const axios = require('axios')
 
 class APIController {
-    static getRandomActivity(req, res, next) {
-        console.log("masuk")
-        // const apiKey = process.env.API_WEATHER
-        axios(
-           { 
-            method: 'get',
-            url: `http://www.boredapi.com/api/activity`
-        })
-        .then(response => {
-            console.log(response.data)
-            res.status(200).json({
-                activity: response.data.activity,
-                type: response.data.type,
-                participants: response.data.participants
+    static getAPI(req, res, next) {
+       const options = {
+        method: 'GET',
+        url: 'https://dad-jokes.p.rapidapi.com/random/joke',
+        headers: {
+            'X-RapidAPI-Host': 'dad-jokes.p.rapidapi.com',
+            'X-RapidAPI-Key': '55174abe7cmshe0dc27ce1016c4dp1ee575jsn672eaddc6670'
+        }
+        };
+
+        axios.request(options).then(function (response) {
+            res.status(200).json({ 
+                setupJoke: response.data.body[0].setup,
+                punchline: response.data.body[0].punchline
             })
-        })
-        .catch(err => {
-            next(err)
-        })
+            console.log(response.data.body[0].setup);
+            console.log(response.data.body[0].punchline);
+        }).catch(function (error) {
+            console.error(error);
+        });
     }
 
 }

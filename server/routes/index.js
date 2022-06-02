@@ -5,6 +5,6 @@ const APIRouter = require('./APIRouter')
 
 router.use('/users', UserRouter)
 router.use('/todos', TodoRouter)
-router.use('/randomfunactivities', APIRouter)
+router.use('/api', APIRouter)
 
 module.exports = router;

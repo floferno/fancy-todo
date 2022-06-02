@@ -1,3 +1,5 @@
+// const APIController = require("../../server/controllers/APIController")
+
 const baseUrl = `http://localhost:3000`
 
 
@@ -63,6 +65,11 @@ $(document).ready(()=> {
         e.preventDefault()
         logout()
         loginPage()
+    })
+
+    $("#btn-api").on("click", (e) => {
+        e.preventDefault()
+        getAPI()
     })
 
 })
@@ -374,32 +381,6 @@ function editTodo(id) {
     })
 }
 
-// function getStatus(id) {
-//     $.ajax({
-//         url: `${baseUrl}/todos/${id}`,
-//         method: "GET",
-//         headers: {
-//             access_token: localStorage.getItem("access_token")
-//         }
-//     })
-//     .done(todos => {
-//         editPage()
-//         $("#edit-title").val(`${todos.title}`)
-//         $("#edit-description").val(`${todos.description}`)
-//         $("#edit-due-date").val(`${(todos.due_date)}`)
-//         $("#edit-todo-button").on("click", (e) => {
-//             e.preventDefault()
-//             updateStatus(id)
-//         })
-//     })
-//     .fail((xhr, text) => {
-//         swal(
-//             "Oops!", xhr.responseJSON.error[0], "error")
-//             console.log(xhr.responseJSON.error[0]
-//         )
-//     })
-// }
-
 
 function updateStatus(id) {
     console.log(id)
@@ -473,6 +454,44 @@ function deleteTodo(id) {
         })
         }
     })      
+}
+
+function getAPI() {
+    console.log("masuppp getapi")
+    $.ajax({
+                url: `${baseUrl}/api`,
+                method: "GET",
+                headers: {
+                    access_token: localStorage.getItem("access_token")
+                }
+            })
+    .done(response => {
+        // console.log(response.setupJoke, "<<< setup")
+        // console.log(response.punchline, "<<< punchline")
+
+        if (!response.length) {
+            $("#api-data").append(`
+            <div style="border-style: groove; border-width:0.5px;" class="pt-2 pb-2 px-2">
+            <p>${response.setupJoke}</p>
+            <p>${response.punchline}</p>
+            </div>
+            `)
+        } else {
+            location.reload()
+            $("#api-data").append(`
+            <div style="border-style: groove; border-width:0.5px;" class="pt-2 pb-2 px-2">
+            <p>${response.setupJoke}</p>
+            <p>${response.punchline}</p>
+            </div>
+            `)
+        }
+    })
+    .fail((xhr, text) => {
+        swal(
+        "Oops!", xhr.responseJSON.error[0], "error")
+        console.log(xhr.responseJSON.error[0])
+    })
+
 }
 
 
