@@ -468,28 +468,18 @@ function getAPI() {
     .done(response => {
         // console.log(response.setupJoke, "<<< setup")
         // console.log(response.punchline, "<<< punchline")
-
-        if (!response.length) {
-            $("#api-data").append(`
-            <div style="border-style: groove; border-width:0.5px;" class="pt-2 pb-2 px-2">
+        console.log(response.status)
+        $("#api-data").append(`
+            <div style="border-style: solid; border-width:0.5px;" class="pt-2 pb-2 px-2">
             <p>${response.setupJoke}</p>
             <p>${response.punchline}</p>
             </div>
-            `)
-        } else {
-            location.reload()
-            $("#api-data").append(`
-            <div style="border-style: groove; border-width:0.5px;" class="pt-2 pb-2 px-2">
-            <p>${response.setupJoke}</p>
-            <p>${response.punchline}</p>
-            </div>
-            `)
-        }
+        `)
     })
     .fail((xhr, text) => {
         swal(
-        "Oops!", xhr.responseJSON.error[0], "error")
-        console.log(xhr.responseJSON.error[0])
+            "Oops!", xhr.responseJSON.error, "error")
+            console.log(xhr.responseJSON.error)
     })
 
 }
