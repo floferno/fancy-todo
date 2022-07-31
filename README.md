@@ -10,7 +10,7 @@ Users can create, read, update, and delete their to-do tasks after registering a
 ## URL
 
 ```jsx
-/registeru
+/register
 ```
 
 ## Method
