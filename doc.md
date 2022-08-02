@@ -1,11 +1,11 @@
-# 1. POST /register
+# 1. POST /users/register
 
 - **To create a new user**
 
 ## URL
 
 ```jsx
-/register
+/users/register
 ```
 
 ## Method
@@ -75,14 +75,14 @@ OR
 
 
 
-# 2. GET /login
+# 2. GET /users/login
 
 - **To login with an existing account**
 
 ## URL
 
 ```jsx
-/login
+/users/login
 ```
 
 ## Method
