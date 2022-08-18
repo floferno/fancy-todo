@@ -1,9 +1,11 @@
 // const APIController = require("../../server/controllers/APIController")
 
+// const { Console } = require("console")
+
 const baseUrl = `http://localhost:3000`
 
 
-$(document).ready(()=> {
+$(document).ready(() => {
 
     authentication()
     // $("#todo-list").show()
@@ -75,11 +77,12 @@ $(document).ready(()=> {
 })
 
 function authentication() {
-    if(localStorage.getItem("access_token")) {
+    if (localStorage.getItem("access_token")) {
         $("#login-page").hide()
         $("#register-page").hide()
         $("#add-todo-page").hide()
-        // $("#navbar").show()
+        $('#welcome-name').text(localStorage.getItem('full_name'));
+        console.log(localStorage)
         $("#home-page").show()
         // $("#todo-list").show()
         homePage()
@@ -140,32 +143,6 @@ function homePage() {
     // $("#todo-list").show()
 }
 
-function register() {
-    let full_name = $("#register-full-name").val()
-    let email = $("#register-email").val()
-    let password = $("#register-password").val()
-
-    $.ajax({
-        url: `${baseUrl}/users/register`,
-        method: "POST",
-        data: {
-            full_name,
-            email,
-            password
-        }
-    })
-    .done((response) => {
-        // console.log(response)
-        swal("Successfully registered!", "Yay! Now you can log in!", "success")
-        authentication()
-    })
-   .fail((xhr, text) => {
-        swal("Registration failed!", xhr.responseJSON.error[0], "error")
-    })
-    .always(_ => {
-        $("#register-form").trigger("reset")
-    })
-}
 
 
 function login() {
@@ -177,28 +154,46 @@ function login() {
         method: "POST",
         data: {
             email,
-            password
+            password,
+        },
+        headers: {
+            access_token: localStorage.getItem("access_token"),
+            full_name: localStorage.getItem("full_name")
         }
     })
-    .done((response) => {
-        // console.log("masuk res login")
-        localStorage.setItem("access_token", response.access_token)
-        authentication()
-    
-    })
-    .fail((xhr, text) => {
-        swal("Try again!", xhr.responseJSON.error, "error")
-        console.log(xhr.responseJSON.error)
-    })
-    .always(_ => {
-        $("#login-form").trigger("reset")
-    }) 
+        .done((response) => {
+            // console.log("masuk res login")
+            localStorage.setItem("access_token", response.access_token)
+
+            authentication()
+
+        })
+        .fail((xhr, text) => {
+            swal("Try again!", xhr.responseJSON.error, "error")
+            console.log(xhr.responseJSON.error)
+        })
+        .always(_ => {
+            $("#login-form").trigger("reset")
+        })
 }
 
+// function getFullName() {
+//     $.ajax({
+//         url: `${baseUrl}/users/login`,
+//         method: "GET",
+//         headers: {
+//             access_token: localStorage.getItem("access_token")
+//         }
+//     })
+//         .done((response) => {
+//             console.log(response)
+//         })
+
+// }
 
 
 function register() {
-    console.log("register")
+    // console.log("register")
     let full_name = $("#register-full-name").val()
     let email = $("#register-email").val()
     let password = $("#register-password").val()
@@ -212,17 +207,17 @@ function register() {
             password
         }
     })
-    .done((response) => {
-        // console.log(response)
-        swal("Successfully registered!", "Yay! Now you can log in!", "success")
-        authentication()
-    })
-   .fail((xhr, text) => {
-        swal("Registration failed!", xhr.responseJSON.error[0], "error")
-    })
-    .always(_ => {
-        $("#register-form").trigger("reset")
-    })
+        .done((response) => {
+            // console.log(response)
+            swal("Successfully registered!", "Yay! Now you can log in!", "success")
+            authentication()
+        })
+        .fail((xhr, text) => {
+            swal("Registration failed!", xhr.responseJSON.error[0], "error")
+        })
+        .always(_ => {
+            $("#register-form").trigger("reset")
+        })
 }
 
 
@@ -244,25 +239,26 @@ function addTodo() {
             access_token: localStorage.getItem("access_token")
         }
     })
-    .done((response) => {
-        location.reload()
-        swal("Yay!", "Task successfully added!", "success")
-        homePage()
-    })
-    .fail((xhr, text) => {
-        swal(
-            "Oops!", xhr.responseJSON.error[0], "error")
-            console.log(xhr.responseJSON.error[0])
-        addPage()
-    })
-    .always(_ => {
-        $("#add-todo-form").trigger("reset")
-    })
+        .done((response) => {
+            location.reload()
+            swal("Yay!", "Task successfully added!", "success")
+            // $("#card-content").empty()
+            homePage()
+        })
+        .fail((xhr, text) => {
+            swal(
+                "Oops!", xhr.responseJSON.error[0], "error")
+            // console.log(xhr.responseJSON.error[0])
+            addPage()
+        })
+        .always(_ => {
+            $("#add-todo-form").trigger("reset")
+        })
 }
 
 
 function getTodos() {
-    
+
     $.ajax({
         url: `${baseUrl}/todos`,
         method: "GET",
@@ -270,10 +266,11 @@ function getTodos() {
             access_token: localStorage.getItem("access_token")
         }
     })
-    .done((todos) => {
-        todos.forEach(el => {
-            if (!el.status) {
-                $("#card-content").append(`
+        .done((todos) => {
+            $("#card-content").empty()
+            todos.forEach(el => {
+                if (!el.status) {
+                    $("#card-content").append(`
                 <div class="col-sm-6" id="todo-${el.id}">
                     <div class="card mt-3 mx-1 shadow" style="width:auto">
                         <div class="card-body">
@@ -289,8 +286,8 @@ function getTodos() {
                     </div>
                 </div>
             `)
-            } else {
-                $("#card-content").append(`
+                } else {
+                    $("#card-content").append(`
                 <div class="col-sm-6" id="todo-${el.id}">
                     <div class="card mt-3 mx-1 shadow" style="width:auto">
                         <div class="card-body">
@@ -306,20 +303,17 @@ function getTodos() {
                     </div>
                 </div>
             `)
-        }
-            
+                }
+
+            })
         })
-    })
-    .fail((xhr, status) => {
-        console.log(xhr, status)
-    })
+        .fail((xhr, status) => {
+            console.log(xhr, status)
+        })
 }
 
-/* <input type="checkbox" checked data-toggle="toggle" onclick="updateStatus(${el.id})" data-on="Done" data-off="Not Done"> */
-                        // <button type="button" class="btn btn-secondary btn-block d-inline mt-2" id="btn-status-undone" style="width:auto;"><i class="bi bi-check-square" onclick="updateStatus(${el.id})"></i></button>
-
 function getEditForm(id) {
-    console.log("masuk editform")
+    // console.log("masuk editform")
     editPage()
 
     $.ajax({
@@ -329,21 +323,21 @@ function getEditForm(id) {
             access_token: localStorage.getItem("access_token")
         }
     })
-    .done(todos => {
-        $("#edit-title").val(`${todos.title}`)
-        $("#edit-description").val(`${todos.description}`)
-        $("#edit-due-date").val(`${(todos.due_date)}`)
-        $("#edit-todo-button").on("click", (e) => {
-            e.preventDefault()
-            editTodo(id)
+        .done(todos => {
+            $("#edit-title").val(`${todos.title}`)
+            $("#edit-description").val(`${todos.description}`)
+            $("#edit-due-date").val(`${(todos.due_date)}`)
+            $("#edit-todo-button").on("click", (e) => {
+                e.preventDefault()
+                editTodo(id)
+            })
         })
-    })
-    .fail((xhr, text) => {
-        swal(
-            "Oops!", xhr.responseJSON.error[0], "error")
+        .fail((xhr, text) => {
+            swal(
+                "Oops!", xhr.responseJSON.error[0], "error")
             console.log(xhr.responseJSON.error[0]
-        )
-    })
+            )
+        })
 }
 
 
@@ -365,20 +359,20 @@ function editTodo(id) {
             due_date
         }
     })
-    .done(response => {
-        // location.reload()
-        authentication()
-        homePage()
-        swal("Yay!", "Task successfully changed!", "success")
-    })
-    .fail((xhr, text) => {
-        swal(
-            "Oops!", xhr.responseJSON.error[0], "error")
-            console.log(xhr.responseJSON.error[0])
-    })
-    .always(() => {
+        .done(response => {
+            // location.reload()
             authentication()
-    })
+            homePage()
+            swal("Yay!", "Task successfully changed!", "success")
+        })
+        .fail((xhr, text) => {
+            swal(
+                "Oops!", xhr.responseJSON.error[0], "error")
+            console.log(xhr.responseJSON.error[0])
+        })
+        .always(() => {
+            authentication()
+        })
 }
 
 
@@ -393,15 +387,15 @@ function updateStatus(id) {
         }
     })
 
-    .done(response => {
-        console.log(response.status)
-        if (!response.status) {
-            status = true
-        } else {
-            status = false
-        }
-        
-             $.ajax({
+        .done(response => {
+            console.log(response.status)
+            if (!response.status) {
+                status = true
+            } else {
+                status = false
+            }
+
+            $.ajax({
                 url: `${baseUrl}/todos/${id}`,
                 method: 'PATCH',
                 headers: {
@@ -418,72 +412,110 @@ function updateStatus(id) {
                 .fail((error) => {
                     console.log(error)
                 })
-    })
-    .fail((xhr, text) => {
-        swal(
-            "Oops!", xhr.responseJSON.error[0], "error")
+        })
+        .fail((xhr, text) => {
+            swal(
+                "Oops!", xhr.responseJSON.error[0], "error")
             console.log(xhr.responseJSON.error[0])
-    })
+        })
 }
 
 function deleteTodo(id) {
     console.log(id, "masuppp delete ")
-     swal({
-            title: "Are you sure you want to permanently delete this?",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-            })       
-    .then((willDelete) => {
-        if (willDelete) {
-            $.ajax({
-                url: `${baseUrl}/todos/${id}`,
-                method: "DELETE",
-                headers: {
-                    access_token: localStorage.getItem("access_token")
-                }
-            })
-        .done(response => {
-            $(`#todo-${id}`).remove()
-            swal("Task deleted!", {icon: "success"})
-            homePage() 
+    swal({
+        title: "Are you sure you want to permanently delete this?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: `${baseUrl}/todos/${id}`,
+                    method: "DELETE",
+                    headers: {
+                        access_token: localStorage.getItem("access_token")
+                    }
+                })
+                    .done(response => {
+                        $(`#todo-${id}`).remove()
+                        swal("Task deleted!", { icon: "success" })
+                        homePage()
+                    })
+                    .fail((xhr, text) => {
+                        console.log(xhr, text)
+                        homePage()
+                    })
+            }
         })
-        .fail((xhr, text) => {
-            console.log(xhr, text)
-            homePage() 
-        })
-        }
-    })      
 }
 
 function getAPI() {
-    console.log("masuppp getapi")
+    // console.log("masuppp getapi")
+    $("#api-data").empty()
     $.ajax({
-                url: `${baseUrl}/api`,
-                method: "GET",
-                headers: {
-                    access_token: localStorage.getItem("access_token")
-                }
-            })
-    .done(response => {
-        // console.log(response.setupJoke, "<<< setup")
-        // console.log(response.punchline, "<<< punchline")
-        console.log(response.status)
-        $("#api-data").append(`
-            <div style="border-style: solid; border-width:0.5px;" class="pt-2 pb-2 px-2">
+        url: `${baseUrl}/api`,
+        method: "GET",
+        headers: {
+            access_token: localStorage.getItem("access_token")
+        }
+    })
+        .done(response => {
+            // console.log(response.setupJoke, "<<< setup")
+            // console.log(response.punchline, "<<< punchline")
+            console.log(response.status)
+            $("#api-data").append(`
+            <div style="border-style: solid; border-color: #0d6efd; border-width:0.5px;" class="pt-2 pb-2 px-2">
             <p>${response.setupJoke}</p>
             <p>${response.punchline}</p>
             </div>
         `)
-    })
-    .fail((xhr, text) => {
-        swal(
-            "Oops!", xhr.responseJSON.error, "error")
+        })
+        .fail((xhr, text) => {
+            swal(
+                "Oops!", xhr.responseJSON.error, "error")
             console.log(xhr.responseJSON.error)
-    })
+        })
 
 }
 
+
+// function onSignIn(googleUser) {
+//         // Useful data for your client-side scripts:
+//         var profile = googleUser.getBasicProfile();
+//         console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+//         console.log('Full Name: ' + profile.getName());
+//         console.log('Given Name: ' + profile.getGivenName());
+//         console.log('Family Name: ' + profile.getFamilyName());
+//         console.log("Image URL: " + profile.getImageUrl());
+//         console.log("Email: " + profile.getEmail());
+
+//         // The ID token you need to pass to your backend:
+//         var id_token = googleUser.getAuthResponse().id_token;
+//         console.log("ID Token: " + id_token);
+//       }
+
+// function onSignIn(googleUser) {
+//     console.log("masuk client oauth")
+//     $.ajax({
+//         method: "POST",
+//         url: `${baseUrl}/users/google-login`,
+//         data: {
+//             id_token: googleUser.getAuthResponse().id_token
+//         }
+//     })
+//         .done((response) => {
+//             console.log(response, "client response")
+//             localStorage.setItem("access_token", response.access_token)
+//             checkLocalStorage();
+//         })
+//         .fail((err) => {
+//             console.log(err, "error client");
+//         })
+//         .always(() => {
+//             authentication()
+//         })
+// }
 
 function logout() {
     localStorage.clear()
