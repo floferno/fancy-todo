@@ -2,7 +2,7 @@
 
 // const { Console } = require("console")
 
-const baseUrl = `http://localhost:3000`
+const baseUrl = `https://fancy-wancy-todo.herokuapp.com/`
 
 
 $(document).ready(() => {
