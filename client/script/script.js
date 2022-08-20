@@ -2,7 +2,7 @@
 
 // const { Console } = require("console")
 
-const baseUrl = `https://fancy-wancy-todo.herokuapp.com/`
+const baseUrl = `https://fancy-wancy-todo.herokuapp.com`
 
 
 $(document).ready(() => {
