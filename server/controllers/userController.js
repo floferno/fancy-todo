@@ -1,7 +1,7 @@
 const { User } = require('../models/')
 const { comparePass } = require('../helpers/bcrypt')
 const { generateToken } = require('../helpers/jwt')
-
+const { OAuth2Client } = require('google-auth-library');
 /**
  * REGISTER
  * 1. http req dgn menggunakan params atau body email dan password
@@ -80,6 +80,45 @@ class UserController {
       })
     }
 
+
+static async googleLogin(req, res, next) {
+  try {
+    console.log("masuk google login server")
+    const { id_token } = req.body
+    const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+    const ticket = await client.verifyIdToken({
+        idToken: id_token,
+        audience: process.env.GOOGLE_CLIENT_ID
+    });
+
+    const payload = ticket.getPayload()
+    const email = payload.email
+    let password = email.toString().split('@')
+    password = password[0]
+    let user = await User.findOne({ where: { email } })
+    if (!user) {
+        let newUser = { email, password }
+        let createUser = await User.create(newUser)
+        const payload = {
+            id: createUser.id,
+            email: createUser.email
+        }
+        const access_token = generateToken(payload)
+        return res.status(201).json({ access_token })
+    } else {
+        const payload = {
+            id: user.id,
+            email: user.email
+        }
+        const access_token = generateToken(payload)
+        return res.status(200).json({ access_token })
+    }
+
+  } catch (err) {
+      console.log(err)
+      return next(err)
+  }
+}
 
 }
 

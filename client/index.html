@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <meta name="google-signin-client_id"
+    content="376067390279-gikf87aetrej6bbtso0va7ba8891u9qu.apps.googleusercontent.com" /> -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
   
   
@@ -89,13 +91,16 @@
                   <a href="#" style="text-decoration:none" id="register-link">I don't have any account</a>
                 </div>
   
-                <span class="d-block text-left my-4 text-muted">&mdash; or login with &mdash;</span>
+                <!-- <span class="d-block text-left my-4 text-muted">&mdash; or login with &mdash;</span> -->
   
-                <div class="social-login">
-                  <a href="#" class="google">
-                    <span class="icon-google mr-3"></span>
-                  </a>
-                </div>
+                <!-- <div class="social-login">
+                  <div class="g-signin2 bg-white flex justify-center rounded-md overflow-hidden" data-width="200" data-height="40"
+                    data-onsuccess="onSignIn"></div>
+                  <div id="g_id_onload" data-client_id="376067390279-gikf87aetrej6bbtso0va7ba8891u9qu.apps.googleusercontent.com" data-callback="handleCredentialResponse">
+                  </div>
+                  <div class="g_id_signin" data-type="standard">
+                  </div>
+                </div> -->
               </form>
             </div>
           </div>
@@ -143,13 +148,6 @@
                 <a href="#" style="text-decoration:none" id="login-link">I already have an account</a>
               </div>
 
-              <span class="d-block text-left my-4 text-muted">&mdash; or register with &mdash;</span>
-
-              <div class="social-login">
-                <a href="#" class="google">
-                  <span class="icon-google mr-3"></span>
-                </a>
-              </div>
             </form>
           </div>
         </div>
@@ -282,6 +280,8 @@
 </div>
 <!-- END OF ALL -->
 
+<!-- <script src="https://accounts.google.com/gsi/client" async defer></script> -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>

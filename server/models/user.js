@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,  
-          msg: 'Cannot be blank'
+          msg: 'Full name cannot be blank'
         },
       }
     },
@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         notEmpty: {
           args: true,  
-          msg: 'Cannot be blank'
+          msg: 'Email cannot be blank'
         },
       },
       unique: {
@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: 'Cannot be blank'
+          msg: 'Password cannot be blank'
         },
         len: {
           args: [6, 20],
